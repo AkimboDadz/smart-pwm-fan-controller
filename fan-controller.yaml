@@ -163,6 +163,20 @@ text_sensor:
       if (id(show_total_fans).state) return std::to_string(int(id(active_fan_count).state)) + " / " + std::to_string(id(attached_fans));
       return std::to_string(int(id(active_fan_count).state));
 
+  - platform: version
+    name: "ESPHome Version"
+    entity_category: diagnostic
+
+  - platform: wifi_info
+    ip_address:
+      name: "WiFi IP Address"
+    ssid:
+      name: "WiFi SSID"
+    bssid:
+      name: "WiFi BSSID"
+    mac_address:
+      name: "WiFi MAC Address"
+
 sensor:
   - platform: template
     name: "Active Fan Count"
@@ -347,3 +361,13 @@ sensor:
     update_interval: 5s
     filters:
       - multiply: 0.5
+
+  - platform: wifi_signal
+    name: "WiFi Signal"
+    update_interval: 60s
+    entity_category: diagnostic
+
+  - platform: uptime
+    name: "Uptime"
+    update_interval: 60s
+    entity_category: diagnostic
