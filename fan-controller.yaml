@@ -32,7 +32,7 @@ esphome:
     then:
       - script.execute:
           id: set_fan_speed
-          value: !lambda 'return id(fan_speed_value);'
+          value: !lambda 'return id(fan_speed);'
 
 dashboard_import:
   package_import_url: github://joshuaboniface/smart-pwm-fan-controller/fan-controller.yaml@master
@@ -71,22 +71,27 @@ wifi:
   power_save_mode: none
 
 globals:
-  - id: fan_speed_value
+  - id: fan_speed
     type: float
     restore_value: true
     initial_value: '100.0'
+
+  - id: attached_fans
+    type: int
+    restore_value: true
+    initial_value: '0'
 
 script:
   - id: set_fan_speed
     mode: single
     then:
       - lambda: |-
-          id(fan_pwm_output).set_level(id(fan_speed_value) / 100.0);
+          id(fan_pwm_output).set_level(id(fan_speed) / 100.0);
 
 number:
   - platform: template
     name: "Fan Speed"
-    id: fan_speed
+    id: fan_speed_setter
     unit_of_measurement: "%"
     min_value: 0
     max_value: 100
@@ -95,17 +100,38 @@ number:
       then:
         - lambda: |-
             ESP_LOGD("fan_speed", "Setting fan speed to %.1f%%", x);
-            id(fan_speed_value) = x;
+            id(fan_speed) = x;
             id(fan_pwm_output).set_level(x / 100.0);
     lambda: |-
-      return id(fan_speed_value);
+      return id(fan_speed);
+
+  - platform: template
+    name: "Attached Fans"
+    id: attached_fans_setter
+    icon: mdi:fan-auto
+    min_value: 0
+    max_value: 8
+    step: 1
+    set_action:
+      then:
+        - lambda: |-
+            id(attached_fans) = x;
+    lambda: |-
+      return id(attached_fans);
 
 switch:
   - platform: gpio
+    name: "Fan Power"
     id: fan_power
     icon: mdi:fan
-    name: "Fan Power"
     pin: GPIO13
+
+  - platform: template
+    name: "Show Total in Fan Status"
+    id: show_total_fans
+    icon: mdi:ab-testing
+    optimistic: true
+    restore_mode: RESTORE_DEFAULT_OFF
 
 output:
   - platform: ledc
@@ -118,11 +144,30 @@ button:
     icon: mdi:power-cycle
     entity_category: diagnostic
 
-sensor:
+text_sensor:
+  - platform: template
+    name: "Fan Fault"
+    icon: mdi:fan-alert
+    update_interval: 5s
+    lambda: |-
+      if (id(active_fan_count).state == 0) return std::string("Off");
+      if (id(active_fan_count).state < id(attached_fans)) return std::string("Fault");
+      return std::string("OK");
+
   - platform: template
     name: "Active Fans"
+    id: active_fans
     icon: mdi:numeric
-    accuracy_decimals: 0
+    update_interval: 5s
+    lambda: |-
+      if (id(show_total_fans).state) return std::to_string(int(id(active_fan_count).state)) + " / " + std::to_string(id(attached_fans));
+      return std::to_string(int(id(active_fan_count).state));
+
+sensor:
+  - platform: template
+    name: "Active Fan Count"
+    id: active_fan_count
+    internal: true
     lambda: |-
       const std::vector<sensor::Sensor*> sensors = {
         id(fan1_rpm),
@@ -142,7 +187,6 @@ sensor:
           count++;
         }
       }
-
       return count;
     update_interval: 5s
 
