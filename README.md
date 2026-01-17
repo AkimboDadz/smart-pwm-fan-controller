@@ -11,7 +11,7 @@ It can connect up to 8 fans directly, with the following functionality:
  * Individual fan RPM monitoring (2PPM) via ESP32 PCNT.
  * Bank fault detection via settable fan count and RPM detection (an expected-present fan with 0 RPM while on is a fault).
 
-The PCB design details and assembly instructions can be found [in /board](board/) and on [OSHWLab](https://oshwlab.com/joshuaboniface/microenv-2-0).
+The PCB design details and assembly instructions can be found [in /board](board/) and on [OSHWLab](https://oshwlab.com/joshuaboniface/fan-controller).
 
 For full details, [please see my blog post on the project](https://www.boniface.me/posts/smart-pwm-fan-controller).
 
