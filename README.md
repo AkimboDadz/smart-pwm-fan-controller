@@ -51,12 +51,14 @@ For full details, [please see my blog post on the project](https://www.boniface.
 |-------|---------------------------|--------------------------|-------|
 | 4     | M2x12 Screw (AA024)       | $0.09 ($1.91/20)         | [Bambu Lab](https://au.store.bambulab.com/products/m2-socket-head-cap-machine-screws-shcs?id=44534986604707) |
 | 4     | M2 Hex Nut (AB003)        | $0.09 ($1.95/20)         | [Bambu Lab](https://au.store.bambulab.com/products/hex-nut?id=44587813929123) |
+| **T** |                           | $0.18                    |       |
 
 **Rackmount Case**
 | Qty   | Component                 | Cost                     | Links |
 |-------|---------------------------|--------------------------|-------|
 | 4     | M2x16 Screw (AA025)       | $0.09 ($1.93/20)         | [Bambu Lab](https://au.store.bambulab.com/products/m2-socket-head-cap-machine-screws-shcs?id=44534986670243) |
 | 8     | M2 Hex Nut (AB003)        | $0.09 ($1.95/20)         | [Bambu Lab](https://au.store.bambulab.com/products/hex-nut?id=44587813929123) |
+| **T** |                           | $0.18                    |       |
 
 # Contributing
 
