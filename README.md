@@ -38,7 +38,7 @@ For full details, [please see my blog post on the project](https://www.boniface.
 | 2     | N/A       | 2.54mm 1x19 female header | $0.31 ($3.14/10)         | [AliExpress](https://www.aliexpress.com/item/4001198421663.html)* |
 | **T** |           |                           | $13.30                   |       |
 
-## Parts List - 3D Printable Case
+## Parts List - 3D Printable Case (w/ Optional Rack Mount)
 
 **Note:** For the case you will need to print 1x Body, 1x Lid and optionally 1x Rack Mount if intended to mount in a server rack. Screws and nuts needed will depend on whether you are rack mounting or not. Please see below.
 
